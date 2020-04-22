@@ -53,4 +53,54 @@ object ActorCapabilities extends App {
   // forwarding = sending a message with the ORIGINAL sender
   case class WirelessPhoneMessage(content: String, ref: ActorRef)
   alice ! WirelessPhoneMessage("Hi", bob)
+
+  /**
+    * Exercises
+    *
+    * 1. a Counter actor
+    *   - Increment
+    *   - Decrement
+    *   - Print
+    *
+    * 2. a Bank account as an actor
+    *   receives
+    *   - Deposit an amount
+    *   - Withdraw an amount
+    *   - Statement
+    *   replies with
+    *   - Success
+    *   - Failure
+    *
+    *   interact with some other kind of actor
+    */
+
+  /**
+    * Exercise1
+    */
+  class CounterActor extends Actor {
+    private var count = 0
+    override def receive: Receive = {
+      case "Increment" => count += 1
+      case "Decrement" => count -= 1
+      case "Print" => println(s"count is $count")
+      case Increment => count += 1
+      case Decrement => count -= 1
+      case Print => println(s"count is $count")
+    }
+  }
+  case object Increment
+  case object Decrement
+  case object Print
+
+  val counterActor = system.actorOf(Props[CounterActor], "counterActor")
+  counterActor ! "Increment"
+  counterActor ! "Increment"
+  counterActor ! "Decrement"
+  counterActor ! "Print"
+
+  counterActor ! Decrement
+  counterActor ! Decrement
+  counterActor ! Decrement
+  counterActor ! Increment
+  counterActor ! Print
 }
