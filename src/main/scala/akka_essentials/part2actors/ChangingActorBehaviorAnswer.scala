@@ -1,8 +1,8 @@
-package part2actors
+package akka_essentials.part2actors
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import part2actors.ChangingActorBehavior.VoteStatusRequest
-import part2actors.ChangingActorBehaviorAnswer.Counter.{Decrement, Increment}
+import akka_essentials.part2actors.ChangingActorBehavior.VoteStatusRequest
+import akka_essentials.part2actors.ChangingActorBehaviorAnswer.Counter.{Decrement, Increment}
 
 object ChangingActorBehaviorAnswer extends App {
   /**

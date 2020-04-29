@@ -1,4 +1,4 @@
-package part2actors
+package akka_essentials.part2actors
 
 import akka.actor.{Actor, ActorSystem, Props}
 

@@ -1,9 +1,9 @@
-package part2actors
+package akka_essentials.part2actors
 
 import akka.actor.CoordinatedShutdown.IncompatibleConfigurationDetectedReason
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import part2actors.ActorCapabilities.Counter.Increment
-import part2actors.ActorCapabilities.Person.LiveTheLife
+import akka_essentials.part2actors.ActorCapabilities.Counter.Increment
+import akka_essentials.part2actors.ActorCapabilities.Person.LiveTheLife
 
 import scala.util.{Failure, Success}
 
