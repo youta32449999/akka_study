@@ -32,13 +32,15 @@ object TimerSchedulers extends App {
     * 以降は第二引数で指定した周期で処理を実行する
     * 返り値はCancellableとなり、.cancel()メソッドでスケジューラを停止できる
     */
-//  val routine: Cancellable = system.scheduler.schedule(1 second, 2 seconds){
-//    simpleActor ! "heartbeat"
-//  }
-//
-//  system.scheduler.scheduleOnce(5 seconds){
-//    routine.cancel()
-//  }
+  val routine: Cancellable = system.scheduler.scheduleWithFixedDelay(1 second, 2 seconds){
+    new Thread(() => {
+      simpleActor ! "heartbeat"
+    })
+  }
+
+  system.scheduler.scheduleOnce(5 seconds){
+    routine.cancel()
+  }
 
   /**
     * Exercise: implement a self-closing actor
