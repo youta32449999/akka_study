@@ -122,6 +122,12 @@ object TimerSchedulers extends App {
   case object Reminder
   case object Stop
   class TimerBaseHeartbeatActor extends Actor with ActorLogging with Timers {
+    /*
+      timers.startSingleTimer(key, msg, timeout): timeout後に1度だけselfへmsgを送信する
+      (key: timerに付与するkey。同一keyが振られたtimerはcancelメソッドなどで同時に停止できる
+
+      timers.startTimerWithFixedDelay(key, msg, delay): delay毎にselfへmsgを送信する
+     */
     timers.startSingleTimer(TimerKey, Start, 500 millis)
 
     override def receive: Receive = {
