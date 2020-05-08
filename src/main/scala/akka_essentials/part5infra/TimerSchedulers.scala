@@ -127,7 +127,7 @@ object TimerSchedulers extends App {
     override def receive: Receive = {
       case Start =>
         log.info("Bootstrapping")
-        timers.startPeriodicTimer(TimerKey, Reminder, 1 second)
+        timers.startTimerWithFixedDelay(TimerKey, Reminder, 1 second)
       case Reminder =>
         log.info("I am alive")
       case Stop =>
