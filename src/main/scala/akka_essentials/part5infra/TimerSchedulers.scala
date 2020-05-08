@@ -137,8 +137,8 @@ object TimerSchedulers extends App {
     }
   }
 
-  val timerHearbeatActor = system.actorOf(Props[TimerBaseHeartbeatActor], "timerActor")
+  val timerHeartbeatActor = system.actorOf(Props[TimerBaseHeartbeatActor], "timerActor")
   system.scheduler.scheduleOnce(5 seconds) {
-    timerHearbeatActor ! Stop
+    timerHeartbeatActor ! Stop
   }
 }
