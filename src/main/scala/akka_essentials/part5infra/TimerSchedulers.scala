@@ -81,22 +81,27 @@ object TimerSchedulers extends App {
     * Model answer
     */
   class SelfClosingActor extends Actor with ActorLogging {
-    var schedule = createTimeoutWindow()
-
-    def createTimeoutWindow(): Cancellable ={
-      context.system.scheduler.scheduleOnce(1 second) {
-        self ! "timeout"
-      }
-    }
 
     override def receive: Receive = {
+      case message =>
+        log.info(s"Received $message, staying alive")
+        context.become(withScheduler(createTimeoutWindow()))
+    }
+
+    def withScheduler(scheduler: Cancellable): Receive = {
       case "timeout" =>
         log.info("Stopping myself")
         context.stop(self)
       case message =>
         log.info(s"Received $message, staying alive")
-        schedule.cancel()
-        schedule = createTimeoutWindow()
+        scheduler.cancel()
+        context.become(withScheduler(createTimeoutWindow()))
+    }
+
+    def createTimeoutWindow(): Cancellable ={
+      context.system.scheduler.scheduleOnce(1 second) {
+        self ! "timeout"
+      }
     }
   }
 
@@ -143,8 +148,8 @@ object TimerSchedulers extends App {
     }
   }
 
-  val timerHeartbeatActor = system.actorOf(Props[TimerBaseHeartbeatActor], "timerActor")
-  system.scheduler.scheduleOnce(5 seconds) {
-    timerHeartbeatActor ! Stop
-  }
+//  val timerHeartbeatActor = system.actorOf(Props[TimerBaseHeartbeatActor], "timerActor")
+//  system.scheduler.scheduleOnce(5 seconds) {
+//    timerHeartbeatActor ! Stop
+//  }
 }
